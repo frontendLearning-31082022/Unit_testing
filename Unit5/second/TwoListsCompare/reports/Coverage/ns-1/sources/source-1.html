@@ -1,0 +1,189 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > TwoListsCompare</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.example</a>
+</div>
+
+<h1>Coverage Summary for Class: TwoListsCompare (org.example)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TwoListsCompare</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (41/41)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.example;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.function.Function;
+&nbsp;
+&nbsp;public class TwoListsCompare {
+&nbsp;
+<b class="fc">&nbsp;    private List&lt;Double&gt; firstList = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;    private List&lt;Double&gt; secondList = new ArrayList&lt;&gt;();</b>
+&nbsp;
+&nbsp;    final private Function&lt;List&lt;Double&gt;, Double&gt; avrFn;
+<b class="fc">&nbsp;    private String resultMsg = null;</b>
+&nbsp;
+&nbsp;//    public static void main(String[] args) {
+&nbsp;//        List[] data = new List[]{List.of(-1, 124.3, 2, 9, 213.2), List.of(23.3, 124.3, -10, 10.3, 213.2)};
+&nbsp;//
+&nbsp;//        TwoListsCompare twoListsCompare = new TwoListsCompare(data[0], data[1], true);
+&nbsp;//        twoListsCompare.print();
+&nbsp;//    }
+&nbsp;
+<b class="fc">&nbsp;    public TwoListsCompare(List&lt;Double&gt; firstList, List&lt;Double&gt; secondList) {</b>
+<b class="fc">&nbsp;        if (firstList != null) this.firstList.addAll(firstList);</b>
+<b class="fc">&nbsp;        if (secondList != null) this.secondList.addAll(secondList);</b>
+&nbsp;
+<b class="fc">&nbsp;        this.firstList = this.firstList.stream().map(x -&gt; x != null ? x : Double.valueOf(0)).toList();</b>
+<b class="fc">&nbsp;        this.secondList = this.secondList.stream().map(x -&gt; x != null ? x : Double.valueOf(0)).toList();</b>
+&nbsp;
+<b class="fc">&nbsp;        avrFn = x -&gt; x.stream().mapToDouble(y -&gt; y.doubleValue()).average().getAsDouble();</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public TwoListsCompare(List&lt;Object&gt; firstListAnyType, List&lt;Object&gt; secondListAnyType, boolean useAnyTypeAtList) {</b>
+<b class="fc">&nbsp;        List&lt;Double&gt; firstList = recognizeList(firstListAnyType);</b>
+<b class="fc">&nbsp;        List&lt;Double&gt; secondList = recognizeList(secondListAnyType);</b>
+&nbsp;
+<b class="fc">&nbsp;        if (firstList != null) this.firstList.addAll(firstList);</b>
+<b class="fc">&nbsp;        if (secondList != null) this.secondList.addAll(secondList);</b>
+&nbsp;
+<b class="fc">&nbsp;        this.firstList = this.firstList.stream().map(x -&gt; x != null ? x : Double.valueOf(0)).toList();</b>
+<b class="fc">&nbsp;        this.secondList = this.secondList.stream().map(x -&gt; x != null ? x : Double.valueOf(0)).toList();</b>
+&nbsp;
+<b class="fc">&nbsp;        avrFn = x -&gt; x.stream().mapToDouble(y -&gt; y.doubleValue()).average().getAsDouble();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private List&lt;Double&gt; recognizeList(List&lt;Object&gt; firstList) {
+<b class="fc">&nbsp;        List&lt;Double&gt; result = firstList.stream().map(x -&gt; {</b>
+<b class="fc">&nbsp;            Double val = null;</b>
+<b class="fc">&nbsp;            if (x instanceof String) val = Double.parseDouble((String) x);</b>
+<b class="fc">&nbsp;            if (x instanceof Integer) val = Double.valueOf((Integer) x);</b>
+<b class="fc">&nbsp;            if (x instanceof Double) val = (double) x;</b>
+<b class="fc">&nbsp;            if (x instanceof Float)</b>
+<b class="fc">&nbsp;                throw new IllegalArgumentException(&quot;Программа не работает с типом данных &quot; + &quot;float в данной версии&quot;);</b>
+<b class="fc">&nbsp;            if (x instanceof Long)</b>
+<b class="fc">&nbsp;                throw new IllegalArgumentException(&quot;Программа не работает с типом данных &quot; + &quot;long в данной версии&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;            if (val == null)</b>
+<b class="fc">&nbsp;                throw new IllegalArgumentException(&quot;Программа не работает с данным типом данных - &quot; + (x).getClass().getName());</b>
+&nbsp;
+<b class="fc">&nbsp;            return Double.valueOf(val);</b>
+<b class="fc">&nbsp;        }).toList();</b>
+&nbsp;
+<b class="fc">&nbsp;        return result;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    String compare() {
+<b class="fc">&nbsp;        if (firstList.size() == 0 || secondList.size() == 0)</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Передан пустой &quot; + (firstList == null ? &quot;первый&quot; : &quot;второй&quot;) + &quot; список&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        int compRes = compareEngine();</b>
+&nbsp;
+<b class="fc">&nbsp;        if (compRes == 0) resultMsg = &quot;Средние значения равны&quot;;</b>
+<b class="fc">&nbsp;        if (compRes &lt; 0) resultMsg = &quot;Второй список имеет большее среднее значение&quot;;</b>
+<b class="fc">&nbsp;        if (compRes &gt; 0) resultMsg = &quot;Первый список имеет большее среднее значение&quot;;</b>
+&nbsp;
+<b class="fc">&nbsp;        return resultMsg;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    void print() {
+<b class="fc">&nbsp;        if (resultMsg == null) compare();</b>
+<b class="fc">&nbsp;        System.out.println(resultMsg);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private int compareEngine() {
+<b class="fc">&nbsp;        return avrFn.apply(firstList).compareTo(avrFn.apply(secondList));</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-26 22:32</div>
+</div>
+</body>
+</html>
